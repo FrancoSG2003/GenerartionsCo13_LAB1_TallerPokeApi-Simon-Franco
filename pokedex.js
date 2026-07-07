@@ -102,4 +102,39 @@ async function compararPokemons(nombre1, nombre2, stat) {
     }
 }
 
-compararPokemons();
+//compararPokemons();
+
+
+async function pokemonMasFuerte(listaNombres, stat) {
+    let mejorNombre = null;
+    let mejorValor = -1;
+
+    for (let i = 0; i < listaNombres.length; i++) {
+        let nombre = listaNombres[i];
+
+        let pokemon = await buscarPokemon(nombre);
+
+        if (pokemon === null) {
+            continue;
+        }
+
+        let valorStat = obtenerStats(pokemon, stat);
+
+        if (valorStat === null) {
+            continue;
+        }
+
+        if (valorStat > mejorValor) {
+            mejorValor = valorStat;
+            mejorNombre = nombre;
+        }
+    }
+
+    console.log("El pokemon mas fuerte en", stat , "es:", mejorNombre);
+    return mejorNombre;
+}
+
+let equipoPokemon = ["electivire", "greninja", "lucario", "scizor", "trevenant", "grimmsnarl"];
+let stat = "speed";
+
+pokemonMasFuerte(equipoPokemon, stat);
